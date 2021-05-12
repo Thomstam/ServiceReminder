@@ -1,8 +1,5 @@
 package com.example.serviceReminder.formsPackage;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +12,9 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
 import com.example.serviceReminder.R;
 import com.example.serviceReminder.utilities.CustomAdapter;

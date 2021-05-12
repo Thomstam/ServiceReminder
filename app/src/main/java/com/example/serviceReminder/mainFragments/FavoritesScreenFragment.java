@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.serviceReminder.R;
+import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.formsPackage.EditForm;
 import com.example.serviceReminder.utilities.BottomSheetFragment;
 import com.example.serviceReminder.utilities.Vehicle;
 import com.example.serviceReminder.utilities.VehicleRecyclerView;
-import com.example.serviceReminder.database.VehicleViewModel;
 
 import java.util.ArrayList;
 

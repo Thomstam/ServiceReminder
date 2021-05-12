@@ -1,13 +1,5 @@
 package com.example.serviceReminder.formsPackage;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-
-import com.example.serviceReminder.R;
-import com.example.serviceReminder.utilities.CustomAdapter;
-import com.example.serviceReminder.utilities.InputFilterMinMax;
-import com.example.serviceReminder.utilities.Vehicle;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +12,14 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+
+import com.example.serviceReminder.R;
+import com.example.serviceReminder.utilities.CustomAdapter;
+import com.example.serviceReminder.utilities.InputFilterMinMax;
+import com.example.serviceReminder.utilities.Vehicle;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -231,13 +231,14 @@ public class EditForm extends AppCompatActivity {
 
             int notificationSpinnerSelection = notificationTime.getSelectedItemPosition();
             vehicleForEdit.setNotificationSpinnerTimeSelection(notificationSpinnerSelection);
+            vehicleForEdit.setHourAndMinOfTheNotification(saveHourAndMinutesOfTheNotification());
             finishEditForm("update");
         });
     }
 
     private boolean alreadyExists() {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.getPlatesOfVehicle().equals(platesOfVehicle.getText().toString())) {
+            if (vehicle.getPlatesOfVehicle().equals(platesOfVehicle.getText().toString()) || vehicle.getId() != vehicleForEdit.getId()) {
                 return true;
             }
         }
@@ -282,5 +283,11 @@ public class EditForm extends AppCompatActivity {
     private void setDeleteButton() {
         ImageButton delete = findViewById(R.id.deleteButton);
         delete.setOnClickListener(v -> finishEditForm("delete"));
+    }
+
+    private String saveHourAndMinutesOfTheNotification() {
+        String hour = String.valueOf(timeForTheNotification.getHour());
+        String minute = String.valueOf(timeForTheNotification.getMinute());
+        return hour + ":" + minute;
     }
 }

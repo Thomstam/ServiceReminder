@@ -1,23 +1,15 @@
 package com.example.serviceReminder.drawerMainContents;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -28,7 +20,6 @@ import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.mainFragments.MainActivity;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

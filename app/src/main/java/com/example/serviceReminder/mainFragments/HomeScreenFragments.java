@@ -1,6 +1,5 @@
 package com.example.serviceReminder.mainFragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,8 +24,6 @@ import com.example.serviceReminder.utilities.Vehicle;
 import com.example.serviceReminder.utilities.VehicleRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class HomeScreenFragments extends Fragment {
 

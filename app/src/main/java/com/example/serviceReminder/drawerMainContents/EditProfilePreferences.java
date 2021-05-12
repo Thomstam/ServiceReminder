@@ -1,10 +1,5 @@
 package com.example.serviceReminder.drawerMainContents;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.preference.PreferenceManager;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -22,6 +17,11 @@ import android.os.Environment;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import com.example.serviceReminder.R;
 

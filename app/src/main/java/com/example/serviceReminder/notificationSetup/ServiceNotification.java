@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.RemoteViews;
@@ -15,8 +14,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.preference.PreferenceManager;
 
-import com.example.serviceReminder.mainFragments.MainActivity;
 import com.example.serviceReminder.R;
+import com.example.serviceReminder.mainFragments.MainActivity;
 import com.example.serviceReminder.utilities.Vehicle;
 
 import java.util.concurrent.atomic.AtomicInteger;

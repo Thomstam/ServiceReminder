@@ -85,11 +85,11 @@ public class VehicleRepository {
                     Date test2 = sdf.parse(sdf.format(System.currentTimeMillis()));
                     assert test1 != null;
                     assert test2 != null;
-                    if (test1.getTime() != test2.getTime()) ;
-                    {
+                    if (test1.getTime() != test2.getTime()) {
                         int daysPassed = (int) (test2.getTime() - test1.getTime() / 86400000);
                         int newKms = daysPassed * (vehicle.getKmsPerDay() * vehicle.getUsagePerWeek() / 7);
                         vehicle.setCurrentKms(newKms);
+                        vehicle.setLastTimeKmsUpdated(System.currentTimeMillis());
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
