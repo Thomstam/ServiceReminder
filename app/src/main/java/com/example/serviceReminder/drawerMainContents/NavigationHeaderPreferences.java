@@ -42,7 +42,7 @@ public class NavigationHeaderPreferences extends Preference {
     }
 
 
-    public void setEditClickListener(View.OnClickListener onClickListener){
+    public void setEditClickListener(View.OnClickListener onClickListener) {
         editClickListener = onClickListener;
     }
 

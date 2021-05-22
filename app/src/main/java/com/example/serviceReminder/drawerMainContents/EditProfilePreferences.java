@@ -58,10 +58,10 @@ public class EditProfilePreferences extends AppCompatActivity {
         loadCompanyName();
     }
 
-    private void setCompleteSettings(){
+    private void setCompleteSettings() {
         ImageButton completeSettings = findViewById(R.id.completeFormProfileSettings);
         completeSettings.setOnClickListener(v -> {
-            if (companyName.getText().toString().equals("")){
+            if (companyName.getText().toString().equals("")) {
                 companyName.setError("Cannot Be Empty");
                 return;
             }
@@ -85,18 +85,18 @@ public class EditProfilePreferences extends AppCompatActivity {
         }
     }
 
-    private void setProfilePicture(){
+    private void setProfilePicture() {
         profilePicture = findViewById(R.id.ProfilePictureEditForm);
         profilePicture.setOnClickListener(v -> pickImage());
     }
 
-    private void setCompanyName(){
+    private void setCompanyName() {
         companyName = findViewById(R.id.companyNameEditForm);
     }
 
-    private void loadCompanyName(){
+    private void loadCompanyName() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (preferences.getString("companyName", null) != null){
+        if (preferences.getString("companyName", null) != null) {
             companyName.setText(preferences.getString("companyName", null));
         }
     }
@@ -113,11 +113,11 @@ public class EditProfilePreferences extends AppCompatActivity {
 
     public void pickImage() {
         int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission == PackageManager.PERMISSION_GRANTED){
+        if (permission == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
-        }else {
+        } else {
             verifyStoragePermissions(this);
         }
 

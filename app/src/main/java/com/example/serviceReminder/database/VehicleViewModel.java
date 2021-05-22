@@ -41,7 +41,7 @@ public class VehicleViewModel extends AndroidViewModel {
         vehicleRepository.updateAllVehicles(vehicles);
     }
 
-    public void nukeTable(){
+    public void nukeTable() {
         vehicleRepository.deleteAllVehicles();
     }
 

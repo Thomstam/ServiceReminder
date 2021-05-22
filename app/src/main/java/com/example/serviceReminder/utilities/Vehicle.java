@@ -19,6 +19,7 @@ public class Vehicle implements Parcelable {
     private String platesOfVehicle;
     private String typeOfVehicle;
     private int brandIcon;
+    private int brandIconSpinnerPosition;
     private int currentKms;
     private int serviceKms;
     private int kmsPerDay;
@@ -31,9 +32,10 @@ public class Vehicle implements Parcelable {
     private String hourAndMinOfTheNotification;
 
 
-    public Vehicle(@NonNull String platesOfVehicle, int brandIcon, String typeOfVehicle, int currentKms, int serviceKms, int kmsPerDay, int usagePerWeek, long notificationTime, int notificationSpinnerTimeSelection, String dateOfTheService, boolean isFavorite, long lastTimeKmsUpdated, String hourAndMinOfTheNotification) {
+    public Vehicle(@NonNull String platesOfVehicle, int brandIcon, int brandIconSpinnerPosition, String typeOfVehicle, int currentKms, int serviceKms, int kmsPerDay, int usagePerWeek, long notificationTime, int notificationSpinnerTimeSelection, String dateOfTheService, boolean isFavorite, long lastTimeKmsUpdated, String hourAndMinOfTheNotification) {
         this.platesOfVehicle = platesOfVehicle;
         this.brandIcon = brandIcon;
+        this.brandIconSpinnerPosition = brandIconSpinnerPosition;
         this.typeOfVehicle = typeOfVehicle;
         this.currentKms = currentKms;
         this.serviceKms = serviceKms;
@@ -52,6 +54,7 @@ public class Vehicle implements Parcelable {
         platesOfVehicle = in.readString();
         typeOfVehicle = in.readString();
         brandIcon = in.readInt();
+        brandIconSpinnerPosition = in.readInt();
         currentKms = in.readInt();
         serviceKms = in.readInt();
         kmsPerDay = in.readInt();
@@ -70,6 +73,7 @@ public class Vehicle implements Parcelable {
         dest.writeString(platesOfVehicle);
         dest.writeString(typeOfVehicle);
         dest.writeInt(brandIcon);
+        dest.writeInt(brandIconSpinnerPosition);
         dest.writeInt(currentKms);
         dest.writeInt(serviceKms);
         dest.writeInt(kmsPerDay);
@@ -178,6 +182,14 @@ public class Vehicle implements Parcelable {
 
     public void setDateOfTheService(String dateOfTheService) {
         this.dateOfTheService = dateOfTheService;
+    }
+
+    public int getBrandIconSpinnerPosition() {
+        return brandIconSpinnerPosition;
+    }
+
+    public void setBrandIconSpinnerPosition(int brandIconSpinnerPosition) {
+        this.brandIconSpinnerPosition = brandIconSpinnerPosition;
     }
 
     public boolean isFavorite() {

@@ -39,9 +39,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         deleteDB();
     }
 
-    private void setLanguageInit(){
+    private void setLanguageInit() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        Locale locale = new Locale(preferences.getString("language",""));
+        Locale locale = new Locale(preferences.getString("language", ""));
         Locale.setDefault(locale);
         Configuration configuration = requireContext().getResources().getConfiguration();
         configuration.setLocale(locale);
@@ -49,7 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         requireContext().getResources().updateConfiguration(configuration, requireContext().getResources().getDisplayMetrics());
     }
 
-    private void deleteDB(){
+    private void deleteDB() {
         Preference preference = findPreference("deleteDB");
         assert preference != null;
         preference.setOnPreferenceClickListener(preference1 -> {
@@ -65,7 +65,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
     }
 
-    private void setLanguage(){
+    private void setLanguage() {
         ListPreference preference = findPreference("language");
         assert preference != null;
         preference.setOnPreferenceChangeListener((preference1, newValue) -> {
@@ -77,7 +77,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
     }
 
-    private void setLanguageSelection(String selectedLanguage){
+    private void setLanguageSelection(String selectedLanguage) {
         Locale locale = new Locale(selectedLanguage);
         Locale.setDefault(locale);
         Configuration configuration = new Configuration();

@@ -62,12 +62,12 @@ public class ServiceNotification extends BroadcastReceiver {
                 .setAutoCancel(true);
     }
 
-    private Uri setSound(Context context){
+    private Uri setSound(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Uri sound;
-        if (preferences.getString("SoundPreference", "Got It Done").equals("Got It Done")){
+        if (preferences.getString("SoundPreference", "Got It Done").equals("Got It Done")) {
             sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.got_it_done);
-        }else {
+        } else {
             sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.hasty_ba_dum_tss);
         }
         return sound;

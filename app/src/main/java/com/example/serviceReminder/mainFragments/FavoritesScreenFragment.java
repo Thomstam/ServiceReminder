@@ -93,11 +93,6 @@ public class FavoritesScreenFragment extends Fragment {
     private void setEditClickListener() {
         recyclerCustom.setForEditListener(vehicle -> {
             Intent formEditActivity = new Intent(getActivity(), EditForm.class);
-            ArrayList<Vehicle> tempList = (ArrayList<Vehicle>) MainActivity.vehicleList();
-            if (tempList.size() > 0) {
-                formEditActivity.putParcelableArrayListExtra("vehicles", tempList);
-                formEditActivity.putExtra("vehicleBoolean", true);
-            }
             formEditActivity.putExtra("vehicleForEdit", vehicle);
             requireActivity().startActivityForResult(formEditActivity, REQUEST_EDIT_FORM);
         });

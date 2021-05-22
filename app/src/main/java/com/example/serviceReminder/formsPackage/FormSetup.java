@@ -15,8 +15,10 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.serviceReminder.R;
+import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.utilities.CustomAdapter;
 import com.example.serviceReminder.utilities.InputFilterMinMax;
 import com.example.serviceReminder.utilities.Vehicle;
@@ -44,16 +46,14 @@ public class FormSetup extends AppCompatActivity {
     private Spinner notificationTime;
     private Spinner brandIconSelection;
     private long notificationTimeForTheService;
-    private ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private final ArrayList<Vehicle> vehicles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_setup);
 
-        Bundle bundle = getIntent().getExtras();
-
-        vehicles = bundle.getParcelableArrayList("vehicles");
+        setVehicleViewModel();
 
         setBackButton();
 
@@ -79,6 +79,11 @@ public class FormSetup extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void setVehicleViewModel() {
+        VehicleViewModel vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
+        vehicleViewModel.getStartScreenVehicles().observe(this, vehicles::addAll);
     }
 
     private void setBackButton() {
@@ -219,6 +224,7 @@ public class FormSetup extends AppCompatActivity {
             vehicle = new Vehicle(
                     platesOfVehicle.getText().toString(),
                     brands[brandIconSelection.getSelectedItemPosition()],
+                    brandIconSelection.getSelectedItemPosition(),
                     vehicleType,
                     Integer.parseInt(currentKms.getText().toString()),
                     Integer.parseInt(serviceKms.getText().toString()),

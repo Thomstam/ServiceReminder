@@ -1,6 +1,5 @@
 package com.example.serviceReminder.mainFragments;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -39,6 +38,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,12 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private final static int REQUEST_EDIT_FORM = 102;
     private final static String NAME_FOR_NOTIFICATION_CHANNEL = "DefaultNotificationChannel";
     private final static String ID_FOR_NOTIFICATION_CHANNEL = "ServiceReminder";
-    private final HomeScreenFragments homeScreenFragments = new HomeScreenFragments();
-    private final FavoritesScreenFragment favoritesScreenFragment = new FavoritesScreenFragment();
-    private final UpcomingServicesScreenFragment upcomingServicesScreenFragment = new UpcomingServicesScreenFragment();
-    private static final String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.WRITE_SETTINGS};
-    public static final int REQUEST_SETTINGS = 1;
 
 
     @Override
@@ -82,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setProfilePreferences(){
+    private void setProfilePreferences() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (!preferences.getBoolean("splashScreen", false)){
+        if (!preferences.getBoolean("splashScreen", false)) {
             Intent profileSettings = new Intent(this, EditProfilePreferences.class);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("splashScreen",true);
+            editor.putBoolean("splashScreen", true);
             editor.apply();
             startActivityForResult(profileSettings, 103);
         }
@@ -146,21 +140,21 @@ public class MainActivity extends AppCompatActivity {
             NotificationChannel channel = new NotificationChannel(ID_FOR_NOTIFICATION_CHANNEL, NAME_FOR_NOTIFICATION_CHANNEL, importance);
             channel.setDescription(description);
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes. CONTENT_TYPE_SONIFICATION )
-                    .setUsage(AudioAttributes. USAGE_ALARM )
-                    .build() ;
-            channel.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" +sound), audioAttributes);
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
+            channel.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + sound), audioAttributes);
 
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
 
-    private int soundID(Context context){
+    private int soundID(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (preferences.getString("SoundPreference", "").equals("Got It Done")){
+        if (preferences.getString("SoundPreference", "").equals("Got It Done")) {
             return R.raw.got_it_done;
-        }else {
+        } else {
             return R.raw.hasty_ba_dum_tss;
         }
     }
@@ -169,26 +163,26 @@ public class MainActivity extends AppCompatActivity {
     private void setBottomNavigationViewMain() {
         BottomNavigationView bottomNavigationViewMain = findViewById(R.id.bottomNavigationMain);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (preferences.getString("startFragment", "Home Screen").equals("Home Screen")){
+        if (preferences.getString("startFragment", "Home Screen").equals("Home Screen")) {
             bottomNavigationViewMain.setSelectedItemId(R.id.mainPanel);
-            openFragment(homeScreenFragments);
-        }else if (preferences.getString("startFragment", "Home Screen").equals("Favorite Screen")){
+            openFragment(new HomeScreenFragments());
+        } else if (preferences.getString("startFragment", "Home Screen").equals("Favorite Screen")) {
             bottomNavigationViewMain.setSelectedItemId(R.id.favoritesPanel);
-            openFragment(favoritesScreenFragment);
-        }else {
+            openFragment(new FavoritesScreenFragment());
+        } else {
             bottomNavigationViewMain.setSelectedItemId(R.id.upcomingServices);
-            openFragment(upcomingServicesScreenFragment);
+            openFragment(new UpcomingServicesScreenFragment());
         }
         bottomNavigationViewMain.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.mainPanel:
-                    openFragment(homeScreenFragments);
+                    openFragment(new HomeScreenFragments());
                     return true;
                 case R.id.favoritesPanel:
-                    openFragment(favoritesScreenFragment);
+                    openFragment(new FavoritesScreenFragment());
                     return true;
                 case R.id.upcomingServices:
-                    openFragment(upcomingServicesScreenFragment);
+                    openFragment(new UpcomingServicesScreenFragment());
                     return true;
             }
             return false;
@@ -223,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("Vehicle", vehicle);
         intent.putExtra("bundle", bundle);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, NotificationID.getID(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         long testingTimeToNotify = System.currentTimeMillis() + 1000 * 5;
@@ -247,17 +241,19 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton floatingActionButton = findViewById(R.id.newFormButton);
         floatingActionButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, FormSetup.class);
-            ArrayList<Vehicle> tempList = (ArrayList<Vehicle>) vehicleRecyclerViewFromMain.getVehicles();
-            if (tempList.size() > 0) {
-                intent.putParcelableArrayListExtra("vehicles", tempList);
-                intent.putExtra("vehicleBoolean", true);
-            }
-            intent.putExtra("isForEdit", false);
             startActivityForResult(intent, REQUEST_FORM_SETUP);
         });
     }
 
-    public static List<Vehicle> vehicleList() {
-        return vehicleRecyclerViewFromMain.getVehicles();
+    private static class NotificationID {
+
+        private final static AtomicInteger c = new AtomicInteger(0);
+
+        public static int getID() {
+            return c.incrementAndGet();
+        }
+
+
     }
 }
+

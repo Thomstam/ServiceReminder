@@ -15,8 +15,10 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.serviceReminder.R;
+import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.utilities.CustomAdapter;
 import com.example.serviceReminder.utilities.InputFilterMinMax;
 import com.example.serviceReminder.utilities.Vehicle;
@@ -25,6 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class EditForm extends AppCompatActivity {
 
@@ -45,7 +48,8 @@ public class EditForm extends AppCompatActivity {
     private Spinner brandIconSelection;
     private Vehicle vehicleForEdit;
     private long notificationTimeForTheService;
-    private ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private final List<Vehicle> vehiclesToCheck = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +58,10 @@ public class EditForm extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         vehicleForEdit = bundle.getParcelable("vehicleForEdit");
-        vehicles = bundle.getParcelableArrayList("vehicles");
 
         setVehicleRadioButton();
+
+        setVehicleViewModel();
 
         setFormScrollView();
 
@@ -73,6 +78,11 @@ public class EditForm extends AppCompatActivity {
         setNotificationTime();
 
         setBackButton();
+    }
+
+    private void setVehicleViewModel() {
+        VehicleViewModel vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
+        vehicleViewModel.getStartScreenVehicles().observe(this, vehiclesToCheck::addAll);
     }
 
     private void setVehicleRadioButton() {
@@ -150,7 +160,7 @@ public class EditForm extends AppCompatActivity {
         brandIconSelection = findViewById(R.id.brandIconsEditForm);
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), brands);
         brandIconSelection.setAdapter(customAdapter);
-        brandIconSelection.setPromptId(vehicleForEdit.getBrandIcon());
+        brandIconSelection.setSelection(vehicleForEdit.getBrandIconSpinnerPosition());
 
     }
 
@@ -237,8 +247,8 @@ public class EditForm extends AppCompatActivity {
     }
 
     private boolean alreadyExists() {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle.getPlatesOfVehicle().equals(platesOfVehicle.getText().toString()) || vehicle.getId() != vehicleForEdit.getId()) {
+        for (Vehicle vehicle : vehiclesToCheck) {
+            if (vehicle.getPlatesOfVehicle().equals(platesOfVehicle.getText().toString()) && vehicle.getId() != vehicleForEdit.getId()) {
                 return true;
             }
         }

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.serviceReminder.utilities.Vehicle;
 
-@Database(entities = {Vehicle.class}, version = 8, exportSchema = false)
+@Database(entities = {Vehicle.class}, version = 9, exportSchema = false)
 public abstract class VehicleDataBase extends RoomDatabase {
     public abstract VehicleDao vehicleDao();
 
