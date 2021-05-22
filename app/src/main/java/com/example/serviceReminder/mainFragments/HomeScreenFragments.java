@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -56,6 +57,8 @@ public class HomeScreenFragments extends Fragment {
         setFavoriteOnClick();
 
         setEditClickListener();
+
+        setSearchBar();
     }
 
     private void setRecyclerCustom() {
@@ -95,6 +98,22 @@ public class HomeScreenFragments extends Fragment {
             Intent formEditActivity = new Intent(getActivity(), EditForm.class);
             formEditActivity.putExtra("vehicleForEdit", vehicle);
             requireActivity().startActivityForResult(formEditActivity, REQUEST_EDIT_FORM);
+        });
+    }
+
+    private void setSearchBar(){
+        SearchView searchView = requireView().findViewById(R.id.home_screen_fragment_search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerCustom.getFilter().filter(newText);
+                return false;
+            }
         });
     }
 }

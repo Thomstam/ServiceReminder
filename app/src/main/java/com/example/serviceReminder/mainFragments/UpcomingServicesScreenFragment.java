@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,10 +21,8 @@ import com.example.serviceReminder.R;
 import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.formsPackage.EditForm;
 import com.example.serviceReminder.utilities.BottomSheetFragment;
-import com.example.serviceReminder.utilities.Vehicle;
 import com.example.serviceReminder.utilities.VehicleRecyclerView;
 
-import java.util.ArrayList;
 
 public class UpcomingServicesScreenFragment extends Fragment {
 
@@ -55,6 +54,8 @@ public class UpcomingServicesScreenFragment extends Fragment {
         setRecyclerOnClick();
 
         setEditClickListener();
+
+        setSearchBar();
     }
 
     private void setRecyclerCustom() {
@@ -94,6 +95,22 @@ public class UpcomingServicesScreenFragment extends Fragment {
             Intent formEditActivity = new Intent(getActivity(), EditForm.class);
             formEditActivity.putExtra("vehicleForEdit", vehicle);
             requireActivity().startActivityForResult(formEditActivity, REQUEST_EDIT_FORM);
+        });
+    }
+
+    private void setSearchBar(){
+        SearchView searchView = requireView().findViewById(R.id.upcomingServices_fragment_search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerCustom.getFilter().filter(newText);
+                return false;
+            }
         });
     }
 }

@@ -3,6 +3,8 @@ package com.example.serviceReminder.utilities;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,11 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.serviceReminder.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerView.ViewHolder> {
+public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerView.ViewHolder> implements Filterable {
 
-    List<Vehicle> vehicles = new ArrayList<>();
+    private List<Vehicle> vehicles = new ArrayList<>();
+    private List<Vehicle> allVehicles;
     private onItemClickListener listener;
     private onFavoriteClickListener favoriteListener;
     private onEditClickListener forEditListener;
@@ -27,6 +31,9 @@ public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerVie
 
     public void setVehicles(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
+        if (allVehicles == null) {
+            allVehicles = new ArrayList<>(vehicles);
+        }
         notifyDataSetChanged();
     }
 
@@ -68,6 +75,39 @@ public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerVie
     public int getItemCount() {
         return vehicles.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    final Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Vehicle> filteredList = new ArrayList<>();
+            if (constraint.toString().isEmpty() || constraint.length() == 0) {
+                filteredList.addAll(allVehicles);
+            } else {
+                for (Vehicle vehicle : allVehicles) {
+                    if (vehicle.getPlatesOfVehicle().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        filteredList.add(vehicle);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            vehicles.clear();
+            if (results.values != null) {
+                vehicles.addAll((Collection<? extends Vehicle>) results.values);
+            }
+            notifyDataSetChanged();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView brandImg;
