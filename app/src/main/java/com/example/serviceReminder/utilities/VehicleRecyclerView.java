@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.serviceReminder.R;
+import com.example.serviceReminder.database.Vehicle;
 
 import java.util.ArrayList;
 import java.util.Collection;

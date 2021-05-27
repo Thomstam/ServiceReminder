@@ -20,7 +20,7 @@ import androidx.preference.PreferenceManager;
 
 import com.example.serviceReminder.R;
 import com.example.serviceReminder.mainFragments.MainActivity;
-import com.example.serviceReminder.utilities.Vehicle;
+import com.example.serviceReminder.database.Vehicle;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

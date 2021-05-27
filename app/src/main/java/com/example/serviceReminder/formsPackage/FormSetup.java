@@ -21,7 +21,7 @@ import com.example.serviceReminder.R;
 import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.utilities.CustomAdapter;
 import com.example.serviceReminder.utilities.InputFilterMinMax;
-import com.example.serviceReminder.utilities.Vehicle;
+import com.example.serviceReminder.database.Vehicle;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

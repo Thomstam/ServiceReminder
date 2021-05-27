@@ -5,8 +5,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.serviceReminder.utilities.Vehicle;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.example.serviceReminder.utilities;
+package com.example.serviceReminder.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,9 +9,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
-@Entity
-        (indices = {@Index(value = {"platesOfVehicle"},
-                unique = true)})
+@Entity(indices = {@Index(value = {"platesOfVehicle"}, unique = true)})
 public class Vehicle implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -30,7 +28,6 @@ public class Vehicle implements Parcelable {
     private boolean isFavorite;
     private long lastTimeKmsUpdated;
     private String hourAndMinOfTheNotification;
-
 
     public Vehicle(@NonNull String platesOfVehicle, int brandIcon, int brandIconSpinnerPosition, String typeOfVehicle, int currentKms, int serviceKms, int kmsPerDay, int usagePerWeek, long notificationTime, int notificationSpinnerTimeSelection, String dateOfTheService, boolean isFavorite, long lastTimeKmsUpdated, String hourAndMinOfTheNotification) {
         this.platesOfVehicle = platesOfVehicle;
@@ -223,4 +220,5 @@ public class Vehicle implements Parcelable {
     public void setHourAndMinOfTheNotification(String hourAndMinOfTheNotification) {
         this.hourAndMinOfTheNotification = hourAndMinOfTheNotification;
     }
+
 }

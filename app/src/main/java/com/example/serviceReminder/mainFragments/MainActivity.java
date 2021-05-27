@@ -25,7 +25,7 @@ import com.example.serviceReminder.drawerMainContents.EditProfilePreferences;
 import com.example.serviceReminder.drawerMainContents.SettingsFragment;
 import com.example.serviceReminder.formsPackage.FormSetup;
 import com.example.serviceReminder.notificationSetup.ServiceNotification;
-import com.example.serviceReminder.utilities.Vehicle;
+import com.example.serviceReminder.database.Vehicle;
 import com.example.serviceReminder.utilities.VehicleRecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

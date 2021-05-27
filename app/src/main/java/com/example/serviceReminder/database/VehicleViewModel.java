@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.serviceReminder.utilities.Vehicle;
-
 import java.util.List;
 
 public class VehicleViewModel extends AndroidViewModel {
