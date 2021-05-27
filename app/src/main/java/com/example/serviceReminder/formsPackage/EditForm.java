@@ -259,7 +259,11 @@ public class EditForm extends AppCompatActivity {
         int kmsForTheService = Integer.parseInt(serviceKms.getText().toString()) - Integer.parseInt(currentKms.getText().toString());
         int averageKmsPerWeek = (Integer.parseInt(averageKmsPerDay.getText().toString()) * Integer.parseInt(daysOfUse.getText().toString())) / 7;
         long daysForTheService = kmsForTheService / averageKmsPerWeek + 1;
-        return daysForTheService * 86400000;
+        if (daysForTheService == 0){
+            return 86400000;
+        }else {
+            return daysForTheService * 86400000;
+        }
     }
 
     private long notificationTimeInMills() throws ParseException {
