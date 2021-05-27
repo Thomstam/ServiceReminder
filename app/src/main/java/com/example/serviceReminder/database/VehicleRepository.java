@@ -78,6 +78,7 @@ public class VehicleRepository {
     }
 
     private void updateVehicleKms(List<Vehicle> vehicles) {
+
         new Thread(() -> {
             for (Vehicle vehicle : vehicles) {
                 try {

@@ -22,7 +22,8 @@
         android:id="@+id/vehicle_brand"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:contentDescription="Vehicle_Brand" />
+        android:contentDescription="Vehicle_Brand"
+        android:background="@raw/alfa"/>
 
     <ImageView
         android:id="@+id/platesInformationIcon"

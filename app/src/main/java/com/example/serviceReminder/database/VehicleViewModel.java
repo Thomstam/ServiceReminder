@@ -37,6 +37,7 @@ public class VehicleViewModel extends AndroidViewModel {
         return upComingServices;
     }
 
+
     public void updateVehicle(List<Vehicle> vehicles) {
         vehicleRepository.updateAllVehicles(vehicles);
     }
@@ -56,4 +57,5 @@ public class VehicleViewModel extends AndroidViewModel {
     public void delete(Vehicle vehicle) {
         vehicleRepository.delete(vehicle);
     }
+    
 }

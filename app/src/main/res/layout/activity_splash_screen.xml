@@ -4,20 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".utilities.SplashScreen"
-    android:background="@color/basic"
     tools:ignore="HardcodedText">
 
-    <ImageView
-        android:id="@+id/welcomeScreen"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splash_screen_welcome_photo"
-        android:contentDescription="welcomeScreen" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal|center_vertical">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragmentSplashScreen"/>
+        <TextView
+            android:id="@+id/textService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service"
+            android:layout_marginEnd="@dimen/doubleStandardMargin"
+            android:textSize="50sp"/>
+
+        <TextView
+            android:id="@+id/textReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reminder"
+            android:textSize="50sp"
+            android:layout_marginStart="@dimen/doubleStandardMargin"/>
+    </LinearLayout>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/welcomeScreen"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@drawable/splash_screen_welcome_photo"-->
+<!--        android:contentDescription="welcomeScreen" />-->
+
 
 
 </RelativeLayout>

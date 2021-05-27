@@ -3,15 +3,9 @@ package com.example.serviceReminder.mainFragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioAttributes;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -36,8 +30,6 @@ import com.example.serviceReminder.utilities.VehicleRecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     public static VehicleRecyclerView vehicleRecyclerViewFromMain;
     private final static int REQUEST_FORM_SETUP = 101;
     private final static int REQUEST_EDIT_FORM = 102;
-    private final static String NAME_FOR_NOTIFICATION_CHANNEL = "DefaultNotificationChannel";
-    private final static String ID_FOR_NOTIFICATION_CHANNEL = "ServiceReminder";
 
 
     @Override
@@ -63,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         setVehicleRecyclerViewFromMain();
 
         setVehicleViewModel();
-
-        notificationChannel(this);
 
         newFormSetup();
 
@@ -93,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setVehicleViewModel() {
         vehicleViewModelFromMain = new ViewModelProvider(this).get(VehicleViewModel.class);
-        vehicleViewModelFromMain.getStartScreenVehicles().observe(this, vehicles -> vehicleRecyclerViewFromMain.setVehicles(vehicles));
-        vehicleViewModelFromMain.updateVehicle(vehicleRecyclerViewFromMain.getVehicles());
+        vehicleViewModelFromMain.getStartScreenVehicles().observe(this, vehicles -> vehicleRecyclerViewFromMain.setBasicListVehicle(vehicles));
+        vehicleViewModelFromMain.updateVehicle(vehicleRecyclerViewFromMain.getBasicListVehicle());
     }
 
     @Override
@@ -129,34 +117,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-    }
-
-    public void notificationChannel(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            int sound = soundID(context);
-            String description = "Channel For Service Reminder";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(ID_FOR_NOTIFICATION_CHANNEL, NAME_FOR_NOTIFICATION_CHANNEL, importance);
-            channel.setDescription(description);
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .build();
-            channel.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + sound), audioAttributes);
-
-            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    private int soundID(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (preferences.getString("SoundPreference", "").equals("Got It Done")) {
-            return R.raw.got_it_done;
-        } else {
-            return R.raw.hasty_ba_dum_tss;
-        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -198,14 +158,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingsInit() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.settingsFragment, new SettingsFragment());
+        transaction.replace(R.id.settingsFragment, new SettingsFragment());
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
     private void headerInit() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.drawer_header_profile_settings, new DrawerHeaderFragment());
+        transaction.replace(R.id.drawer_header_profile_settings, new DrawerHeaderFragment());
         transaction.addToBackStack(null);
         transaction.commit();
     }

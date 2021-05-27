@@ -69,7 +69,7 @@ public class UpcomingServicesScreenFragment extends Fragment {
 
     private void setViewModel() {
         vehicleViewModelUpComingServices = new ViewModelProvider(this).get(VehicleViewModel.class);
-        vehicleViewModelUpComingServices.getUpComingServices().observe(getViewLifecycleOwner(), vehicles -> recyclerCustom.setVehicles(vehicles));
+        vehicleViewModelUpComingServices.getUpComingServices().observe(getViewLifecycleOwner(), vehicles -> recyclerCustom.setBasicListVehicle(vehicles));
     }
 
     private void setRecyclerOnClick() {

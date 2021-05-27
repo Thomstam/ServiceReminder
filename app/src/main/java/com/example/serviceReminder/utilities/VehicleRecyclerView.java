@@ -20,25 +20,23 @@ import java.util.List;
 
 public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerView.ViewHolder> implements Filterable {
 
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private List<Vehicle> basicListVehicle = new ArrayList<>();
     private List<Vehicle> allVehicles;
+
     private onItemClickListener listener;
     private onFavoriteClickListener favoriteListener;
     private onEditClickListener forEditListener;
 
-    public VehicleRecyclerView() {
-    }
-
-    public void setVehicles(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-        if (allVehicles == null) {
-            allVehicles = new ArrayList<>(vehicles);
+    public void setBasicListVehicle(List<Vehicle> basicListVehicle) {
+        this.basicListVehicle = basicListVehicle;
+        if (allVehicles == null){
+            this.allVehicles =  new ArrayList<>(basicListVehicle);
         }
         notifyDataSetChanged();
     }
 
-    public List<Vehicle> getVehicles() {
-        return vehicles;
+    public List<Vehicle> getBasicListVehicle() {
+        return basicListVehicle;
     }
 
     public void notifyData() {
@@ -54,17 +52,17 @@ public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.brandImg.setImageResource(vehicles.get(position).getBrandIcon());
-        holder.platesNum.setText(vehicles.get(position).getPlatesOfVehicle());
-        holder.date.setText(vehicles.get(position).getDateOfTheService());
-        if (vehicles.get(position).getTypeOfVehicle().equals("Car")) {
+        holder.brandImg.setImageResource(basicListVehicle.get(position).getBrandIcon());
+        holder.platesNum.setText(basicListVehicle.get(position).getPlatesOfVehicle());
+        holder.date.setText(basicListVehicle.get(position).getDateOfTheService());
+        if (basicListVehicle.get(position).getTypeOfVehicle().equals("Car")) {
             holder.vehicleImg.setImageResource(R.drawable.recycler_view_car);
-        } else if (vehicles.get(position).getTypeOfVehicle().equals("Truck")) {
+        } else if (basicListVehicle.get(position).getTypeOfVehicle().equals("Truck")) {
             holder.vehicleImg.setImageResource(R.drawable.recycler_view_truck);
         } else {
             holder.vehicleImg.setImageResource(R.drawable.recycler_view_bike);
         }
-        if (vehicles.get(position).isFavorite()) {
+        if (basicListVehicle.get(position).isFavorite()) {
             holder.isFavorite.setImageResource(R.drawable.recycler_view_favorite_true);
         } else {
             holder.isFavorite.setImageResource(R.drawable.recycler_view_favorite_false);
@@ -73,7 +71,7 @@ public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerVie
 
     @Override
     public int getItemCount() {
-        return vehicles.size();
+        return basicListVehicle.size();
     }
 
     @Override
@@ -101,9 +99,9 @@ public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerVie
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            vehicles.clear();
+            basicListVehicle.clear();
             if (results.values != null) {
-                vehicles.addAll((Collection<? extends Vehicle>) results.values);
+                basicListVehicle.addAll((Collection<? extends Vehicle>) results.values);
             }
             notifyDataSetChanged();
         }
@@ -125,9 +123,9 @@ public class VehicleRecyclerView extends RecyclerView.Adapter<VehicleRecyclerVie
             date = itemView.findViewById(R.id.date);
             isFavorite = itemView.findViewById(R.id.favorites_button);
             forEdit = itemView.findViewById(R.id.editIcon);
-            itemView.setOnClickListener(v -> listener.onItemClick(vehicles.get(getAbsoluteAdapterPosition())));
-            isFavorite.setOnClickListener(v -> favoriteListener.onFavoriteClick(vehicles.get(getAbsoluteAdapterPosition())));
-            forEdit.setOnClickListener(v -> forEditListener.onEditClick(vehicles.get(getAbsoluteAdapterPosition())));
+            itemView.setOnClickListener(v -> listener.onItemClick(basicListVehicle.get(getAbsoluteAdapterPosition())));
+            isFavorite.setOnClickListener(v -> favoriteListener.onFavoriteClick(basicListVehicle.get(getAbsoluteAdapterPosition())));
+            forEdit.setOnClickListener(v -> forEditListener.onEditClick(basicListVehicle.get(getAbsoluteAdapterPosition())));
         }
     }
 

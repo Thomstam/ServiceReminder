@@ -17,7 +17,7 @@ import androidx.preference.PreferenceManager;
 
 import com.example.serviceReminder.R;
 import com.example.serviceReminder.database.VehicleViewModel;
-import com.example.serviceReminder.mainFragments.MainActivity;
+import com.example.serviceReminder.notificationSetup.ServiceNotification;
 
 import java.util.Locale;
 
@@ -116,8 +116,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("SoundPreference", soundsName[which]);
                             editor.apply();
-
-                            new MainActivity().notificationChannel(getContext());
                         } else
                             mSelected = -1;
                     };

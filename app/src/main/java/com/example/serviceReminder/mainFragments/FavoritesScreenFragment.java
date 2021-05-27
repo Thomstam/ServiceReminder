@@ -21,10 +21,7 @@ import com.example.serviceReminder.R;
 import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.formsPackage.EditForm;
 import com.example.serviceReminder.utilities.BottomSheetFragment;
-import com.example.serviceReminder.utilities.Vehicle;
 import com.example.serviceReminder.utilities.VehicleRecyclerView;
-
-import java.util.ArrayList;
 
 
 public class FavoritesScreenFragment extends Fragment {
@@ -43,6 +40,7 @@ public class FavoritesScreenFragment extends Fragment {
         inflater.inflate(R.layout.main_activity_favorites_fragment, container, false);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -72,7 +70,7 @@ public class FavoritesScreenFragment extends Fragment {
 
     private void setViewModel() {
         vehicleViewModelFavorites = new ViewModelProvider(this).get(VehicleViewModel.class);
-        vehicleViewModelFavorites.getFavoritesScreenVehicles().observe(getViewLifecycleOwner(), vehicles -> recyclerCustom.setVehicles(vehicles));
+        vehicleViewModelFavorites.getFavoritesScreenVehicles().observe(getViewLifecycleOwner(), vehicles -> recyclerCustom.setBasicListVehicle(vehicles));
     }
 
     private void setRecyclerOnClick() {

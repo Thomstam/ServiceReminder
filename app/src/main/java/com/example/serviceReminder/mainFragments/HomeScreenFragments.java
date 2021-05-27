@@ -21,10 +21,7 @@ import com.example.serviceReminder.R;
 import com.example.serviceReminder.database.VehicleViewModel;
 import com.example.serviceReminder.formsPackage.EditForm;
 import com.example.serviceReminder.utilities.BottomSheetFragment;
-import com.example.serviceReminder.utilities.Vehicle;
 import com.example.serviceReminder.utilities.VehicleRecyclerView;
-
-import java.util.ArrayList;
 
 public class HomeScreenFragments extends Fragment {
 
@@ -72,7 +69,7 @@ public class HomeScreenFragments extends Fragment {
 
     private void setViewModel() {
         vehicleViewModelHomeScreen = new ViewModelProvider(this).get(VehicleViewModel.class);
-        vehicleViewModelHomeScreen.getStartScreenVehicles().observe(getViewLifecycleOwner(), vehicles -> recyclerCustom.setVehicles(vehicles));
+        vehicleViewModelHomeScreen.getStartScreenVehicles().observe(getViewLifecycleOwner(), vehicles -> recyclerCustom.setBasicListVehicle(vehicles));
     }
 
     private void setRecyclerOnClick() {

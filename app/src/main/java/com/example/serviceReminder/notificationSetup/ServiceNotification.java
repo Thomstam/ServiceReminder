@@ -1,12 +1,16 @@
 package com.example.serviceReminder.notificationSetup;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
@@ -26,6 +30,8 @@ public class ServiceNotification extends BroadcastReceiver {
     private PendingIntent pendingIntent;
     private NotificationCompat.Builder builder;
     private Color lights;
+    private final static String NAME_FOR_NOTIFICATION_CHANNEL = "DefaultNotificationChannel";
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -38,6 +44,8 @@ public class ServiceNotification extends BroadcastReceiver {
         setPreferences(context);
 
         setBuilder(vehicle, context);
+
+        notificationChannel(context);
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
         managerCompat.notify(NotificationID.getID(), builder.build());
@@ -62,17 +70,6 @@ public class ServiceNotification extends BroadcastReceiver {
                 .setAutoCancel(true);
     }
 
-    private Uri setSound(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Uri sound;
-        if (preferences.getString("SoundPreference", "Got It Done").equals("Got It Done")) {
-            sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.got_it_done);
-        } else {
-            sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.hasty_ba_dum_tss);
-        }
-        return sound;
-    }
-
     private void setPreferences(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (preferences.getString("notificationLightsList", "Red").equals("Red")) {
@@ -87,6 +84,34 @@ public class ServiceNotification extends BroadcastReceiver {
     private void setNotificationLayout(RemoteViews remoteViews, Vehicle vehicle) {
         remoteViews.setTextViewText(R.id.platesOfVehicleNotification, vehicle.getPlatesOfVehicle());
         remoteViews.setImageViewResource(R.id.brandNotificationIcon, vehicle.getBrandIcon());
+    }
+
+    public void notificationChannel(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            int sound = soundID(context);
+            String description = "Channel For Service Reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(ID_FOR_NOTIFICATION_CHANNEL, NAME_FOR_NOTIFICATION_CHANNEL, importance);
+            channel.setDescription(description);
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
+            channel.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + sound), audioAttributes);
+
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private int soundID(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (preferences.getString("SoundPreference", "").equals("Got It Done")) {
+            return R.raw.got_it_done;
+        } else {
+            return R.raw.hasty_ba_dum_tss;
+        }
     }
 
 
